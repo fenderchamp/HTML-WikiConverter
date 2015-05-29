@@ -72,7 +72,7 @@ sub attributes { {
 package main;
 
 use strict;
-use Test::More tests => 53;
+use Test::More 'no_plan';
 use HTML::WikiConverter;
 use Test::HTTP::Server;
 
@@ -158,6 +158,7 @@ is( $wc4->html2wiki( html => '&lt;', escape_entities => 1 ), '&lt;', "escape ent
 is( $wc4->html2wiki( html => '&lt;' ), '&lt;', "escape_entities is enabled by default" );
 
 SKIP: {
+   skip "Set DO_NETWORK_TESTS environmental var" unless ( $ENV{DO_NETWORK_TESTS} );
    skip "LWP::UserAgent required for testing how content is fetched from URIs" => 4 unless $have_lwp;
    my $http_server = Test::HTTP::Server->new();
    sub Test::HTTP::Server::Request::old_test_page { 
